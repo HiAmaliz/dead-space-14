@@ -423,9 +423,7 @@
     targetUser: true
     components:
     - type: TTS
-      voices:
-        silero: Glowtron
-        ntts: NTTSMisterHandyFl3
+      voice: Glowtron
 
 #melee
 - type: entity
@@ -518,9 +516,7 @@
     sprite: _DeadSpace/Sponsor/MysticalRay/toy.rsi
     state: toy
   - type: TTS
-    voices:
-      silero: Glowtron
-      ntts: NTTSMisterHandyFl3
+    voice: Glowtron
   - type: SpeakOnTrigger
     pack: PlushieMysticalRaypeech
 

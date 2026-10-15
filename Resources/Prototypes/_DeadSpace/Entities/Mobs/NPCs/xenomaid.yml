@@ -116,9 +116,7 @@
     speechVerb: LargeMob
     speechSounds: Lizard
   - type: TTS
-    voices:
-      silero: Magess
-      ntts: NTTSElenwen
+    voice: Magess
   - type: Vocal
     sounds:
       Male: UnisexXenomorph

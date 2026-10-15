@@ -2,9 +2,7 @@
 
 using System;
 using System.Numerics;
-using Content.Client.DeadSpace.SlimeForm;
 using Content.Shared.DeadSpace.Carrying;
-using Content.Shared.DeadSpace.SlimeForm;
 using Content.Shared.Humanoid;
 using Content.Shared.Rotation;
 using Robust.Client.GameObjects;
@@ -15,7 +13,6 @@ namespace Content.Client.DeadSpace.Carrying;
 public sealed class CarryVisualizerSystem : EntitySystem
 {
     [Dependency] private readonly AppearanceSystem _appearance = default!;
-    [Dependency] private readonly SlimeFormVisualizerSystem _slimeForm = default!;
     [Dependency] private readonly IEyeManager _eye = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
@@ -71,7 +68,6 @@ public sealed class CarryVisualizerSystem : EntitySystem
                 ent.Comp2.Rotation,
                 ent.Comp2.EnableDirectionOverride,
                 ent.Comp2.DirectionOverride);
-            _slimeForm.SetCarriedPose(ent.Owner, true);
         }
 
         var state = _states[ent.Owner];
@@ -80,14 +76,27 @@ public sealed class CarryVisualizerSystem : EntitySystem
         var direction = angle.GetCardinalDir();
         var isHumanoid = HasComp<HumanoidAppearanceComponent>(ent.Owner);
 
-        var slime = TryComp<SlimeFormComponent>(ent.Owner, out var slimeForm) && slimeForm.IsSlime;
-        var offset = CarryOffset(direction, isHumanoid, slime);
+        var offset = isHumanoid
+            ? direction switch
+            {
+                Direction.North => new Vector2(-0.02f, 0.02f),
+                Direction.South => new Vector2(-0.04f, -0.10f),
+                Direction.East => new Vector2(0.04f, -0.10f),
+                Direction.West => new Vector2(-0.04f, -0.10f),
+                _ => new Vector2(-0.08f, -0.08f),
+            }
+            : direction switch
+            {
+                Direction.North => new Vector2(0.02f, 0.02f),
+                Direction.South => new Vector2(0.00f, 0.14f),
+                Direction.East => new Vector2(0.08f, -0.10f),
+                Direction.West => new Vector2(0.00f, -0.10f),
+                _ => new Vector2(0.02f, -0.08f),
+            };
 
         offset = ApplyCarrierScaleToOffset(offset, carrierSprite.Scale);
 
-        var behindCarrier = slime
-            ? direction == Direction.North
-            : direction is Direction.North or Direction.East;
+        var behindCarrier = direction is Direction.North or Direction.East;
 
         var drawDepth = behindCarrier
             ? carrierSprite.DrawDepth - 1
@@ -119,42 +128,6 @@ public sealed class CarryVisualizerSystem : EntitySystem
         _sprite.SetDrawDepth((ent.Owner, ent.Comp2), drawDepth);
     }
 
-    private static Vector2 CarryOffset(Direction direction, bool humanoid, bool slime)
-    {
-        if (humanoid)
-        {
-            return direction switch
-            {
-                Direction.North => new Vector2(-0.02f, 0.02f),
-                Direction.South => new Vector2(-0.04f, -0.10f),
-                Direction.East => new Vector2(0.04f, -0.10f),
-                Direction.West => new Vector2(-0.04f, -0.10f),
-                _ => new Vector2(-0.08f, -0.08f),
-            };
-        }
-
-        if (slime)
-        {
-            return direction switch
-            {
-                Direction.North => new Vector2(0.02f, -0.02f),
-                Direction.South => new Vector2(0.00f, -0.02f),
-                Direction.East => new Vector2(0.02f, -0.02f),
-                Direction.West => new Vector2(0.00f, -0.02f),
-                _ => new Vector2(0.02f, -0.02f),
-            };
-        }
-
-        return direction switch
-        {
-            Direction.North => new Vector2(0.02f, 0.02f),
-            Direction.South => new Vector2(0.00f, 0.14f),
-            Direction.East => new Vector2(0.08f, -0.10f),
-            Direction.West => new Vector2(0.00f, -0.10f),
-            _ => new Vector2(0.02f, -0.08f),
-        };
-    }
-
     private static Vector2 ApplyCarrierScaleToOffset(Vector2 offset, Vector2 carrierScale)
     {
         var normalizedScale = new Vector2(MathF.Abs(carrierScale.X), MathF.Abs(carrierScale.Y));
@@ -172,7 +145,6 @@ public sealed class CarryVisualizerSystem : EntitySystem
         _sprite.SetOffset((uid, sprite), state.Offset);
         _sprite.SetDrawDepth((uid, sprite), state.DrawDepth);
         _sprite.SetRotation((uid, sprite), GetCurrentRotation(uid, state.Rotation));
-        _slimeForm.SetCarriedPose(uid, false);
 
         sprite.EnableDirectionOverride = state.EnableDirectionOverride;
         sprite.DirectionOverride = state.DirectionOverride;

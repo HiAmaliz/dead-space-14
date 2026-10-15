@@ -499,9 +499,7 @@
     sprite: _DeadSpace/Sponsor/DrGnarAlt/toy.rsi
     state: toy
   - type: TTS
-    voices:
-      silero: Ellie
-      ntts: NTTSCirilla
+    voice: Ellie
   - type: SpeakOnTrigger
     pack: PlushieDrGnarAltSpeech
 

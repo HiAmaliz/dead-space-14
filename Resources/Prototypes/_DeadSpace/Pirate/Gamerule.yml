@@ -25,6 +25,8 @@
         - NamesPirateCapitanTitle
         - NamesPirateCapitan
         nameFormat: name-format-pirate
+      - type: Skill
+        group: ALL
       - type: NpcFactionMember
         factions:
         - Syndicate
@@ -48,6 +50,8 @@
         - NamesPirateTitle
         - NamesPirate
         nameFormat: name-format-pirate
+      - type: Skill
+        group: ALL
       - type: NpcFactionMember
         factions:
         - Syndicate

@@ -23,8 +23,3 @@
   - Closet
   - WallLocker
   - WallCloset
-
-- type: paintableGroupCategory
-  id: Gloves
-  groups:
-  - Gloves

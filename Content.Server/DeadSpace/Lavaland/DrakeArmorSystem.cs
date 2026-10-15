@@ -188,19 +188,19 @@ public sealed class DrakeArmorSystem : EntitySystem
             return;
         }
 
-        var ttsVoices = TryComp<TTSComponent>(args.Performer, out var sourceTts)
-            ? new Dictionary<string, string>(sourceTts.Voices)
+        var ttsVoice = TryComp<TTSComponent>(args.Performer, out var sourceTts)
+            ? sourceTts.VoicePrototypeId
             : null;
         var skeleton = _polymorph.PolymorphEntity(args.Performer, args.SkeletonPolymorph);
         if (skeleton is not { } skeletonUid)
             return;
 
-        if (ttsVoices != null &&
+        if (ttsVoice != null &&
             TryComp<TTSComponent>(skeletonUid, out var skeletonTts) &&
             TryComp<HumanoidAppearanceComponent>(skeletonUid, out var skeletonAppearance))
         {
-            skeletonTts.Voices = new(ttsVoices);
-            skeletonAppearance.TtsVoices = new(ttsVoices);
+            skeletonTts.VoicePrototypeId = ttsVoice;
+            skeletonAppearance.Voice = ttsVoice;
         }
 
         TransferCompatibleDamage(args.Performer, skeletonUid);

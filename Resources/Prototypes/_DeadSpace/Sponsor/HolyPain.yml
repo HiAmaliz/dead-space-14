@@ -426,9 +426,7 @@
   - type: SpeakOnTrigger
     pack: HolyPainPlushieSpeak
   - type: TTS
-    voices:
-      silero: Naisha
-      ntts: NTTSEldarDow
+    voice: Naisha
 
 - type: localizedDataset
   id: HolyPainPlushieSpeak

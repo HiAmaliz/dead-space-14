@@ -1,6 +1,4 @@
 // Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
-using Content.Shared.DeadSpace.TTS;
-using Robust.Shared.Configuration;
 
 using System.Linq;
 using System.Diagnostics.CodeAnalysis;
@@ -308,7 +306,7 @@ public sealed class AdminToySystem : EntitySystem
             return;
 
         var tts = EnsureComp<TTSComponent>(toy);
-        tts.Voices[IoCManager.Resolve<IConfigurationManager>().GetCVar(TTSProviderCVars.Provider)] = voice;
+        tts.VoicePrototypeId = voice;
         Dirty(toy, tts);
     }
 
@@ -319,16 +317,14 @@ public sealed class AdminToySystem : EntitySystem
 
         if (!string.IsNullOrEmpty(trimmed))
         {
-            if (!_prototype.TryIndex<TTSVoicePrototype>(trimmed, out var prototype) ||
-                prototype.Provider != IoCManager.Resolve<IConfigurationManager>().GetCVar(TTSProviderCVars.Provider))
+            if (!_prototype.HasIndex<TTSVoicePrototype>(trimmed))
                 return false;
 
             resolvedVoice = trimmed;
             return true;
         }
 
-        var voices = _prototype.EnumeratePrototypes<TTSVoicePrototype>()
-            .Where(voice => voice.Provider == IoCManager.Resolve<IConfigurationManager>().GetCVar(TTSProviderCVars.Provider)).ToList();
+        var voices = _prototype.EnumeratePrototypes<TTSVoicePrototype>().ToList();
         if (voices.Count == 0)
             return true;
 

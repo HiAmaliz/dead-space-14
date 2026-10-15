@@ -7,8 +7,6 @@ using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared.Corvax.CCCVars;
-using Content.Shared.DeadSpace.TTS;
-using Content.Server.DeadSpace.TTS;
 using Prometheus;
 using Robust.Shared.Configuration;
 
@@ -37,7 +35,6 @@ public sealed class TTSManager
     [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private readonly HttpClient _httpClient = new();
-    private readonly SemaphoreSlim _nttsRequests = new(1, 1); // DS14
 
     private ISawmill _sawmill = default!;
     private readonly object _cacheLock = new(); // DS14
@@ -67,19 +64,8 @@ public sealed class TTSManager
     /// <returns>OGG audio bytes or null if failed</returns>
     public async Task<byte[]?> ConvertTextToSpeech(string speaker, string text)
     {
-        // DS14-start
-        var provider = _cfg.GetCVar(TTSProviderCVars.Provider);
-        if (provider != TTSVoices.Silero && provider != TTSVoices.Ntts)
-        {
-            _sawmill.Error($"Unknown TTS provider: {provider}");
-            return null;
-        }
-        var apiUrl = provider == TTSVoices.Ntts ? _cfg.GetCVar(TTSProviderCVars.NttsApiUrl) : _apiUrl;
-        var apiToken = provider == TTSVoices.Ntts ? _cfg.GetCVar(TTSProviderCVars.NttsApiToken) : _apiToken;
-        var pauses = provider == TTSVoices.Ntts && _cfg.GetCVar(TTSProviderCVars.NttsPauses);
-        // DS14-end
         WantedCount.Inc();
-        var cacheKey = GenerateCacheKey($"{provider}/{apiUrl}/{apiToken}/{speaker}/pauses-v3/{pauses}", text); // DS14
+        var cacheKey = GenerateCacheKey(speaker, text);
         // DS14-start
         lock (_cacheLock)
         {
@@ -96,7 +82,7 @@ public sealed class TTSManager
 
         var body = new GenerateVoiceRequest
         {
-            ApiToken = apiToken, // DS14
+            ApiToken = _apiToken,
             Text = text,
             Speaker = speaker,
         };
@@ -105,43 +91,22 @@ public sealed class TTSManager
         try
         {
             var timeout = _cfg.GetCVar(CCCVars.TTSApiTimeout);
-            // DS14-start
-            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(timeout));
-            byte[] soundData;
-            if (provider == TTSVoices.Ntts)
+            var cts = new CancellationTokenSource(TimeSpan.FromSeconds(timeout));
+            var response = await _httpClient.PostAsJsonAsync(_apiUrl, body, cts.Token);
+            if (!response.IsSuccessStatusCode)
             {
-                // NTTS rejects concurrent synthesis for a key. Keep all parts of one utterance together.
-                await _nttsRequests.WaitAsync(cts.Token);
-                try
+                if (response.StatusCode == HttpStatusCode.TooManyRequests)
                 {
-                    byte[]? cached = null;
-                    lock (_cacheLock)
-                        _cache.TryGetValue(cacheKey, out cached);
-                    soundData = cached ?? await NttsSpeechSynthesis.GenerateAsync(
-                        _httpClient, apiUrl, apiToken, speaker, text, cts.Token, pauses);
-                }
-                finally
-                {
-                    _nttsRequests.Release();
-                }
-            }
-            else
-            {
-                using var response = await _httpClient.PostAsJsonAsync(apiUrl, body, cts.Token);
-                if (!response.IsSuccessStatusCode)
-                {
-                    if (response.StatusCode == HttpStatusCode.TooManyRequests)
-                    {
-                        _sawmill.Warning("TTS request was rate limited");
-                        return null;
-                    }
-                    _sawmill.Error($"TTS request returned bad status code: {response.StatusCode}");
+                    _sawmill.Warning("TTS request was rate limited");
                     return null;
                 }
-                var json = await response.Content.ReadFromJsonAsync<GenerateVoiceResponse>(cancellationToken: cts.Token);
-                soundData = Convert.FromBase64String(json.Results.First().Audio);
+
+                _sawmill.Error($"TTS request returned bad status code: {response.StatusCode}");
+                return null;
             }
-            // DS14-end
+
+            var json = await response.Content.ReadFromJsonAsync<GenerateVoiceResponse>(cancellationToken: cts.Token);
+            var soundData = Convert.FromBase64String(json.Results.First().Audio);
 
             // DS14-start
             var cachedAfterRequest = false;
@@ -183,13 +148,6 @@ public sealed class TTSManager
 
             return returnData; // DS14
         }
-        // DS14-start
-        catch (HttpRequestException e) when (e.StatusCode == HttpStatusCode.TooManyRequests)
-        {
-            _sawmill.Warning("TTS request was rate limited");
-            return null;
-        }
-        // DS14-end
         catch (TaskCanceledException)
         {
             RequestTimings.WithLabels("Timeout").Observe((DateTime.UtcNow - reqTime).TotalSeconds);

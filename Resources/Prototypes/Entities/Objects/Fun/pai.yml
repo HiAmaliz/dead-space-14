@@ -74,11 +74,7 @@
   - type: TypingIndicator
     proto: robot
   - type: TTS
-    # DS14-start
-    voices:
-      silero: TrainingRobot
-      ntts: NTTSSentrybot
-    # DS14-end
+    voice: TrainingRobot
   - type: Speech
     speechVerb: Robotic
     speechSounds: Pai

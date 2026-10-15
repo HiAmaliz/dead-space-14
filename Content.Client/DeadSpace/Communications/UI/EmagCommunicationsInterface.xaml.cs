@@ -1,5 +1,4 @@
 // Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
-using Content.Shared.DeadSpace.TTS;
 
 using System.Linq;
 using System.Numerics;
@@ -248,7 +247,6 @@ public sealed partial class EmagCommunicationsInterface : FancyWindow
     {
         var voices = _prototypeManager
             .EnumeratePrototypes<TTSVoicePrototype>()
-            .Where(voice => voice.Provider == _configuration.GetCVar(TTSProviderCVars.Provider))
             .OrderBy(voice => _localization.GetString(voice.Name));
 
         foreach (var voice in voices)

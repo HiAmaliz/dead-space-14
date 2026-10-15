@@ -42,6 +42,10 @@
   - !type:AddComponentSpecial
     components:
       - type: CommandStaff
+      # DS14-Start
+      - type: Skill
+        group: Captain
+      # DS14-End
 
 
 - type: startingGear

@@ -102,7 +102,6 @@ public abstract class SharedNinjaDisguiseSystem : EntitySystem
             Gender = humanoid.Gender,
             Age = humanoid.Age,
             Voice = humanoid.Voice,
-            TtsVoices = new(humanoid.TtsVoices),
             PermanentlyHidden = new HashSet<HumanoidVisualLayers>(humanoid.PermanentlyHidden),
             HiddenLayers = new Dictionary<HumanoidVisualLayers, SlotFlags>(humanoid.HiddenLayers),
             CustomBaseLayers = new Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo>(humanoid.CustomBaseLayers),
@@ -124,7 +123,7 @@ public abstract class SharedNinjaDisguiseSystem : EntitySystem
         _humanoidAppearance.SetSex(humanoid.Owner, saved.Sex);
         _humanoidAppearance.SetGender(humanoid.Owner, saved.Gender);
         humanoid.Comp.Age = saved.Age;
-        _humanoidAppearance.SetTTSVoice(humanoid.Owner, saved.Voice, humanoid, saved.TtsVoices);
+        _humanoidAppearance.SetTTSVoice(humanoid.Owner, saved.Voice, humanoid);
         humanoid.Comp.PermanentlyHidden = new HashSet<HumanoidVisualLayers>(saved.PermanentlyHidden);
         humanoid.Comp.CustomBaseLayers = new Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo>(saved.CustomBaseLayers);
 

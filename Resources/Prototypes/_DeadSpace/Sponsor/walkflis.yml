@@ -571,8 +571,6 @@
     sprite: _DeadSpace/Sponsor/walkflis/toy.rsi
     state: icon
   - type: TTS
-    voices:
-      silero: Janna
-      ntts: NTTSTriss
+    voice: Janna
   - type: SpeakOnTrigger
     pack: PlushieWalkflisSpeech

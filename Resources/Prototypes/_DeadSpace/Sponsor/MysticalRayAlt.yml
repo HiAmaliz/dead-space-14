@@ -437,9 +437,7 @@
     targetUser: true
     components:
     - type: TTS
-      voices:
-        silero: Glowtron
-        ntts: NTTSMisterHandyFl3
+      voice: Glowtron
 
 #melee
 - type: entity

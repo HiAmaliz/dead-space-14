@@ -28,15 +28,11 @@ public sealed partial class CelestialOrbComponent : Component
 
     /// <summary>Минимальный урон мелкого луча.</summary>
     [DataField]
-    public float BeamDamageMin = 15f;
+    public float BeamDamageMin = 7f;
 
     /// <summary>Максимальный урон мелкого луча.</summary>
     [DataField]
-    public float BeamDamageMax = 30f;
-
-    /// <summary>Радиус попадания мелкого луча, метры.</summary>
-    [DataField]
-    public float BeamRadius = 0.5f;
+    public float BeamDamageMax = 14f;
 
     /// <summary>Визуальные события шара видят только игроки на карте босса.</summary>
     [ViewVariables]
@@ -58,9 +54,9 @@ public sealed partial class CelestialOrbComponent : Component
     [ViewVariables]
     public float Phase;
 
-    /// <summary>Скорость поворота шара, рад/сек - чем меньше, тем неповоротливее и тем проще уйти.</summary>
+    /// <summary>Скорость поворота шара, рад/сек - чем меньше, тем проще уйти.</summary>
     [DataField]
-    public float TurnRate = 1.4f;
+    public float TurnRate = 3.2f;
 
     /// <summary>Текущее направление полёта шара.</summary>
     [ViewVariables]

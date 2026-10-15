@@ -214,8 +214,6 @@
     Depotojil: 3
 
 # Заражение в определёного некрача
-# Кровотечение уменьшает введённую скафандром дозу до первого тика метаболизма.
-# Для запуска превращения достаточно оставшегося в крови мутагена.
 
 - type: reagent
   id: NecromorphMutagenStalker
@@ -235,12 +233,12 @@
           conditions:
             - !type:ReagentCondition
               reagent: NecromorphMutagenStalker
-              min: 0.01
+              min: 5
         - !type:CauseInfectionDead
           conditions:
             - !type:ReagentCondition
               reagent: NecromorphMutagenStalker
-              min: 0.01
+              min: 5
 
 - type: reagent
   id: NecromorphMutagenCorpseCollector
@@ -260,12 +258,12 @@
           conditions:
             - !type:ReagentCondition
               reagent: NecromorphMutagenCorpseCollector
-              min: 0.01
+              min: 5
         - !type:CauseInfectionDead
           conditions:
             - !type:ReagentCondition
               reagent: NecromorphMutagenCorpseCollector
-              min: 0.01
+              min: 5
 
 - type: reagent
   id: NecromorphMutagenDeva
@@ -285,12 +283,12 @@
           conditions:
             - !type:ReagentCondition
               reagent: NecromorphMutagenDeva
-              min: 0.01
+              min: 5
         - !type:CauseInfectionDead
           conditions:
             - !type:ReagentCondition
               reagent: NecromorphMutagenDeva
-              min: 0.01
+              min: 5
 
 - type: reagent
   id: NecromorphMutagenBoomer
@@ -310,12 +308,12 @@
           conditions:
             - !type:ReagentCondition
               reagent: NecromorphMutagenBoomer
-              min: 0.01
+              min: 5
         - !type:CauseInfectionDead
           conditions:
             - !type:ReagentCondition
               reagent: NecromorphMutagenBoomer
-              min: 0.01
+              min: 5
 
 - type: reagent
   id: NecromorphMutagenPregnant
@@ -335,9 +333,9 @@
           conditions:
             - !type:ReagentCondition
               reagent: NecromorphMutagenPregnant
-              min: 0.01
+              min: 5
         - !type:CauseInfectionDead
           conditions:
             - !type:ReagentCondition
               reagent: NecromorphMutagenPregnant
-              min: 0.01
+              min: 5

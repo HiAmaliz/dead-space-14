@@ -1,4 +1,5 @@
 using Content.Shared.CharacterInfo;
+using Content.Shared.DeadSpace.Skills;
 using Content.Shared.Objectives;
 using Content.Shared.Roles;
 using Robust.Client.Player;
@@ -34,7 +35,7 @@ public sealed class CharacterInfoSystem : EntitySystem
     private void OnCharacterInfoEvent(CharacterInfoEvent msg, EntitySessionEventArgs args)
     {
         var entity = GetEntity(msg.NetEntity);
-        var data = new CharacterData(entity, msg.Objectives, msg.Briefing, msg.Job, Name(entity));
+        var data = new CharacterData(entity, msg.Objectives, msg.Skills, msg.Briefing, msg.Job, Name(entity));
 
         OnCharacterUpdate?.Invoke(data);
     }
@@ -49,6 +50,7 @@ public sealed class CharacterInfoSystem : EntitySystem
     public readonly record struct CharacterData(
         EntityUid Entity,
         Dictionary<string, List<ObjectiveInfo>> Objectives,
+        List<SkillInfo> Skills, // DS14-Skills
         string? Briefing,
         ProtoId<JobPrototype>? JobId,
         string EntityName

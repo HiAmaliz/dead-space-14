@@ -25,6 +25,8 @@
     - type: NpcFactionMember
       factions:
       - CentralCommand
+    - type: Skill
+      group: ALL
 
 - type: chameleonOutfit
   id: CentcomFieldOfficerChameleonOutfit

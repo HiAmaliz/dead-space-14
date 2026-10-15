@@ -3,7 +3,6 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
-using Robust.Client.UserInterface;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -15,8 +14,7 @@ using System.Numerics;
 namespace Content.Client.DeadSpace.Celestial;
 
 /// <summary>
-/// Клиентская сторона Селестиала: субтитры поверх UI-корня (видны и в игре, и в лобби)
-/// и анимация роста сфер.
+/// Клиентская сторона Селестиала: субтитры через оверлей и анимация роста сфер.
 /// </summary>
 public sealed class CelestialClientSystem : EntitySystem
 {
@@ -25,24 +23,21 @@ public sealed class CelestialClientSystem : EntitySystem
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IClyde _clyde = default!;
-    [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
     private EntityUid? _introMusic;
     private EntityUid? _deathMusic;
     private CelestialCutsceneOverlay? _cutsceneOverlay;
     private CelestialDeathOverlay? _deathOverlay;
 
-    private CelestialSubtitleRenderer? _subtitles;
+    private CelestialSubtitleOverlay? _subtitleOverlay;
     private CelestialBeamOverlay? _beamOverlay;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        // субтитры - не оверлей: в лобби вьюпорта нет, оверлеи там не рисуются.
-        // UI-корень рисуется всегда, поэтому рисуем поверх него.
-        _subtitles = new CelestialSubtitleRenderer(_resourceCache);
-        _ui.OnPostDrawUIRoot += DrawSubtitles;
+        _subtitleOverlay = new CelestialSubtitleOverlay(_entityManager, _resourceCache);
+        _overlay.AddOverlay(_subtitleOverlay);
         _beamOverlay = new CelestialBeamOverlay(_entityManager);
         _overlay.AddOverlay(_beamOverlay);
         _cutsceneOverlay = new CelestialCutsceneOverlay(_resourceCache);
@@ -61,15 +56,11 @@ public sealed class CelestialClientSystem : EntitySystem
         SubscribeNetworkEvent<CelestialDeathEndEvent>(OnDeathEnd);
     }
 
-    private void DrawSubtitles(PostDrawUIRootEventArgs args)
-    {
-        _subtitles?.Draw(args.DrawingHandle, args.Root.PixelSizeBox);
-    }
-
     public override void Shutdown()
     {
-        _ui.OnPostDrawUIRoot -= DrawSubtitles;
-        _subtitles = null;
+        if (_subtitleOverlay != null)
+            _overlay.RemoveOverlay(_subtitleOverlay);
+        _subtitleOverlay = null;
         if (_beamOverlay != null)
             _overlay.RemoveOverlay(_beamOverlay);
         _beamOverlay = null;
@@ -87,7 +78,7 @@ public sealed class CelestialClientSystem : EntitySystem
     public override void FrameUpdate(float frameTime)
     {
         base.FrameUpdate(frameTime);
-        _subtitles?.FrameUpdate(frameTime);
+        _subtitleOverlay?.FrameUpdate(frameTime);
         _beamOverlay?.FrameUpdate(frameTime);
         _cutsceneOverlay?.FrameUpdate(frameTime);
         _deathOverlay?.FrameUpdate(frameTime);
@@ -95,7 +86,7 @@ public sealed class CelestialClientSystem : EntitySystem
 
     private void OnSpeak(CelestialSpeakEvent ev, EntitySessionEventArgs args)
     {
-        _subtitles?.Show(ev.Text, ev.Duration);
+        _subtitleOverlay?.Show(ev.Text, ev.Duration);
     }
 
     private void OnBeam(CelestialBeamVisualEvent ev)
@@ -160,7 +151,7 @@ public sealed class CelestialClientSystem : EntitySystem
     private void OnDeathSpeak(CelestialDeathSpeakEvent ev)
     {
         // тот же рендер, что в фразочках и стартовой катсцене, но в палитре смерти
-        _subtitles?.ShowDeath(ev.Text, ev.Duration);
+        _subtitleOverlay?.ShowDeath(ev.Text, ev.Duration);
 
         // 1 фраза - 1 звук
         _audio.PlayGlobal(

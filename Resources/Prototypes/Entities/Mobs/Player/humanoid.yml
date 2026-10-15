@@ -158,11 +158,7 @@
   - type: Loadout
     prototypes: [ DeathSquadGear ]
   - type: TTS
-    # DS14-start
-    voices:
-      silero: Garithos
-      ntts: NTTSGuardCommissarDow
-    # DS14-end
+    voice: Garithos
   - type: GhostRoleNotifys #DS14
     groupPrototype: DeathSquadGroup
   - type: ErtStaff

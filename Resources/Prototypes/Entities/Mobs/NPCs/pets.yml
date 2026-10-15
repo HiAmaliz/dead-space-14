@@ -746,11 +746,7 @@
     description: ghost-role-information-alexander-description
   - type: GhostTakeoverAvailable
   - type: TTS
-    # DS14-start
-    voices:
-      silero: Chen
-      ntts: NTTSBralik
-    # DS14-end
+    voice: Chen
 # DS14-start
   - type: Language
     knownLanguages:

@@ -1,5 +1,4 @@
 using Content.Shared.GameTicking;
-using Content.Shared.DeadSpace.Ports.Jukebox;
 
 namespace Content.Server.DeadSpace.Ports.Jukebox;
 
@@ -10,8 +9,6 @@ public sealed class ServerJukeboxSongsSyncSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => ClearSongs());
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => _jukeboxManager?.CleanUp());
     }
-
-    internal void ClearSongs() => RaiseNetworkEvent(new JukeboxRoundClearedEvent(_jukeboxManager.CleanUp()));
 }

@@ -1,4 +1,3 @@
-using Content.Shared.DeadSpace.TTS;
 using Content.Shared.DisplacementMap;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
@@ -55,16 +54,7 @@ public sealed partial class HumanoidAppearanceComponent : Component
     ///     Current voice. Used for correct cloning.
     /// </summary>
     [DataField("voice")]
-    // DS14-start
-    public ProtoId<TTSVoicePrototype> Voice
-    {
-        get => TtsVoices.GetValueOrDefault(TTSVoices.Silero, SharedHumanoidAppearanceSystem.DefaultVoice);
-        set => TtsVoices[TTSVoices.Silero] = value.Id;
-    }
-
-    [DataField]
-    public Dictionary<string, string> TtsVoices { get; set; } = new();
-    // DS14-end
+    public ProtoId<TTSVoicePrototype> Voice { get; set; } = SharedHumanoidAppearanceSystem.DefaultVoice;
     // Corvax-TTS-End
 
     /// <summary>

@@ -26,8 +26,6 @@ public sealed class RottingSystem : SharedRottingSystem
         SubscribeLocalEvent<RottingComponent, GibbedBeforeDeletionEvent>(OnGibbed);
 
         SubscribeLocalEvent<TemperatureComponent, IsRottingEvent>(OnTempIsRotting);
-
-        SubscribeLocalEvent<RotAccelerationComponent, GetRotMultiplierEvent>(GetRotMultiplier);//DS14
     }
 
     private void OnGibbed(EntityUid uid, RottingComponent component, GibbedBeforeDeletionEvent args)
@@ -43,12 +41,6 @@ public sealed class RottingSystem : SharedRottingSystem
         tileMix?.AdjustMoles(Gas.Ammonia, molsToDump);
     }
 
-    //DS14-Start
-    private void GetRotMultiplier(EntityUid uid, RotAccelerationComponent component, ref GetRotMultiplierEvent args)
-    {
-        args.Multiplier *= component.DecayMultiplier;
-    }
-    //DS14-End
     private void OnTempIsRotting(EntityUid uid, TemperatureComponent component, ref IsRottingEvent args)
     {
         if (args.Handled)
@@ -65,17 +57,17 @@ public sealed class RottingSystem : SharedRottingSystem
     private float GetRotRate(EntityUid uid)
     {
         // DS14-start
-        var ev = new GetRotMultiplierEvent();
-        RaiseLocalEvent(uid, ref ev);
+        if (TryComp<RotAccelerationComponent>(uid, out var rotAccel))
+            return rotAccel.DecayMultiplier;
+        // DS14-end
 
         if (_container.TryGetContainingContainer((uid, null, null), out var container) &&
             TryComp<ProRottingContainerComponent>(container.Owner, out var rotContainer))
         {
-            ev.Multiplier *= rotContainer.DecayModifier;
+            return rotContainer.DecayModifier;
         }
 
-        return ev.Multiplier;
-        // DS14-End
+        return 1f;
     }
 
     public override void Update(float frameTime)

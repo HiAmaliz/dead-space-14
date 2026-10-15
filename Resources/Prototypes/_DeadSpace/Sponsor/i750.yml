@@ -9,7 +9,7 @@
   - type: Sprite
     sprite: _DeadSpace/Sponsor/i750/backpack.rsi
   - type: ExplosionResistance
-    damageCoefficient: 0.9
+    damageCoefficient: 0.1
   - type: Storage
     maxItemSize: Huge
     grid:
@@ -421,9 +421,7 @@
     sprite: _DeadSpace/Sponsor/i750/toy.rsi
     state: toy
   - type: TTS
-    voices:
-      silero: Angel
-      ntts: NTTSOmniknightDota2
+    voice: Angel
   - type: SpeakOnTrigger
     pack: Plushiei750
 

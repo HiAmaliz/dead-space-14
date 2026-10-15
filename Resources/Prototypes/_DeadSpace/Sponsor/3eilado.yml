@@ -436,7 +436,7 @@
     sprite: _DeadSpace/Sponsor/3eilado/e_scythe.rsi
     layers:
       - state: e_sword
-        shader: shaded
+        shader: unshaded
       - state: e_sword_blade
         color: "#FFFFFF"
         visible: false

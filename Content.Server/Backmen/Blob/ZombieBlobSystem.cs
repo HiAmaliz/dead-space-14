@@ -29,8 +29,6 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
-using Content.Shared.NPC;// DS14
-using Robust.Shared.Player;//DS14
 
 namespace Content.Server.Backmen.Blob;
 
@@ -82,8 +80,6 @@ public sealed class ZombieBlobSystem : EntitySystem
 
         SubscribeLocalEvent<RespiratorImmunityComponent, ComponentInit>(OnPressureImmuneInit);
         SubscribeLocalEvent<RespiratorImmunityComponent, ComponentRemove>(OnPressureImmuneRemove);
-        SubscribeLocalEvent<ZombieBlobComponent, PlayerDetachedEvent>(ActivateNPC); //DS14
-        SubscribeLocalEvent<ZombieBlobComponent, PlayerAttachedEvent>(DeactivateNPC); //DS14
     }
 
     private void OnInhale(Entity<ZombieBlobComponent> ent, ref InhaleLocationEvent args)
@@ -171,7 +167,6 @@ public sealed class ZombieBlobSystem : EntitySystem
         var htn = EnsureComp<HTNComponent>(uid);
         htn.RootTask = new HTNCompoundTask() { Task = "SimpleHostileCompound" };
         htn.Blackboard.SetValue(NPCBlackboard.Owner, uid);
-        EnsureComp<ActiveNPCComponent>(uid);//DS14
         _npc.SleepNPC(uid, htn);
 
         var hasMind = _mind.TryGetMind(uid, out _, out var mind);
@@ -257,17 +252,4 @@ public sealed class ZombieBlobSystem : EntitySystem
             RemComp<ZombieBlobComponent>(uid);
         }
     }
-    private void ActivateNPC(EntityUid uid, ZombieBlobComponent component, ref PlayerDetachedEvent args)//DS14-start
-    {
-        var htn = EnsureComp<HTNComponent>(args.Entity);
-        htn.RootTask = new HTNCompoundTask() { Task = "SimpleHostileCompound" };
-        htn.Blackboard.SetValue(NPCBlackboard.Owner, args.Entity);
-        _npc.WakeNPC(args.Entity, htn);
-        EnsureComp<ActiveNPCComponent>(args.Entity);
-    }
-    private void DeactivateNPC(EntityUid uid, ZombieBlobComponent component, ref PlayerAttachedEvent args)
-    {
-        RemCompDeferred<HTNComponent>(args.Entity);
-        RemCompDeferred<ActiveNPCComponent>(args.Entity);
-    }//DS14-end
 }

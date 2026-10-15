@@ -48,9 +48,7 @@
     dissolveOnDnaChange: false
   - type: Speech
   - type: TTS
-    voices:
-      silero: Overwatch
-      ntts: NTTSSentrybot
+    voice: Overwatch
 
 - type: entity
   parent: [ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase]
@@ -134,9 +132,7 @@
     dissolveOnDnaChange: false
   - type: Speech
   - type: TTS
-    voices:
-      silero: Overwatch
-      ntts: NTTSSentrybot
+    voice: Overwatch
 
 - type: entity
   parent: [ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase]
@@ -221,9 +217,7 @@
     dissolveOnDnaChange: false
   - type: Speech
   - type: TTS
-    voices:
-      silero: Overwatch
-      ntts: NTTSSentrybot
+    voice: Overwatch
 
 - type: entity
   parent: [ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase]
@@ -309,9 +303,7 @@
     dissolveOnDnaChange: false
   - type: Speech
   - type: TTS
-    voices:
-      silero: Overwatch
-      ntts: NTTSSentrybot
+    voice: Overwatch
 
 - type: entity
   parent: [ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase]
@@ -397,9 +389,7 @@
     dissolveOnDnaChange: false
   - type: Speech
   - type: TTS
-    voices:
-      silero: Overwatch
-      ntts: NTTSSentrybot
+    voice: Overwatch
 
 - type: entity
   parent: [ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase]

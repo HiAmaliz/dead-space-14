@@ -125,10 +125,8 @@
             - TableMask
           layer:
             - TableLayer
-#ds14-start
-#    - type: TimedDespawn
-#      lifetime: 180
-#ds14-end
+    - type: TimedDespawn
+      lifetime: 180
     - type: PointLight
       enabled: true
       radius: 3

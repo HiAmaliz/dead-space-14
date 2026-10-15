@@ -80,9 +80,7 @@
       Female: Demon
       Unsexed: Demon
   - type: TTS
-    voices:
-      silero: Volibear
-      ntts: NTTSDragonKnightDragonDota2
+    voice: Volibear
   #DS14-start
   - type: GhostRoleNotifys
     groupPrototype: DemonBoss

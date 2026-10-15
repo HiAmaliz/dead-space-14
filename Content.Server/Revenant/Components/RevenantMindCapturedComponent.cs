@@ -1,5 +1,4 @@
 // Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
-using Content.Shared.DeadSpace.TTS;
 
 using Robust.Shared.Prototypes;
 using Content.Shared.DeadSpace.Languages.Prototypes;
@@ -31,20 +30,7 @@ public sealed partial class RevenantMindCapturedComponent : Component
     public EntityUid TargetUid = default!;
 
     [ViewVariables(VVAccess.ReadOnly)]
-    public string ReturnTTSPrototype
-    {
-        get => ReturnTtsVoices.GetValueOrDefault(TTSVoices.Silero, string.Empty);
-        set
-        {
-            if (string.IsNullOrEmpty(value))
-                ReturnTtsVoices.Remove(TTSVoices.Silero);
-            else
-                ReturnTtsVoices[TTSVoices.Silero] = value;
-        }
-    }
-
-    [DataField]
-    public Dictionary<string, string> ReturnTtsVoices = new();
+    public string ReturnTTSPrototype = default!;
 
     [ViewVariables(VVAccess.ReadOnly)]
     public HashSet<ProtoId<LanguagePrototype>> ReturnKnownLanguages = new();

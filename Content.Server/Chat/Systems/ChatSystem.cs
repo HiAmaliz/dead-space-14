@@ -1,4 +1,3 @@
-using Content.Shared.DeadSpace.TTS;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -404,14 +403,9 @@ public sealed partial class ChatSystem : SharedChatSystem
 
             _sound.PlayAnnonceGlobal(Filter.Broadcast(), announcementSound ?? DefaultAnnouncementSound, announcementSound?.Params ?? AudioParams.Default.WithVolume(-2f), true); //DS14
 
-            // DS14-start
-            var ttsVoice = author is { } speaker && TryComp<TTSComponent>(speaker, out var tts)
-                ? TTSVoices.GetVoice(tts, _configurationManager.GetCVar(TTSProviderCVars.Provider))
-                : null;
-            // DS14-end
-            if (author != null && ttsVoice != null) // DS14
+            if (author != null && TryComp<TTSComponent>(author.Value, out var tts) && tts.VoicePrototypeId != null) // For comms console announcements
             {
-                var ev = new AnnounceSpokeEvent(ttsVoice, originalMessage, lexiconMessage, languageId, filter, author.Value); // DS14
+                var ev = new AnnounceSpokeEvent(tts.VoicePrototypeId, originalMessage, lexiconMessage, languageId, filter, author.Value);
                 RaiseLocalEvent(ev);
             }
             else if (usePresetTTS && sender == Loc.GetString("chat-manager-sender-announcement")) // For admin announcements from Centcomm with preset voices

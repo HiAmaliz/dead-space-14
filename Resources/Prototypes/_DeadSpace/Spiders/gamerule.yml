@@ -77,6 +77,8 @@
         color: CornflowerBlue
         sound: "/Audio/_DeadSpace/Spiders/brif.ogg"
       components:
+      - type: Skill
+        group: ALL
       - type: Egg
         canHatch: true
         duration: 360
@@ -96,6 +98,8 @@
         color: CornflowerBlue
         sound: "/Audio/_DeadSpace/Spiders/brif.ogg"
       components:
+      - type: Skill
+        group: ALL
       - type: Egg
         canHatch: true
         duration: 360
@@ -115,6 +119,8 @@
         color: CornflowerBlue
         sound: "/Audio/_DeadSpace/Spiders/brif.ogg"
       components:
+      - type: Skill
+        group: ALL
       - type: Egg
         canHatch: true
         duration: 360

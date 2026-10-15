@@ -1,4 +1,3 @@
-using Content.Shared.DeadSpace.TTS;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -1823,7 +1822,6 @@ namespace Content.Client.Lobby.UI
 
             _loadoutWindow?.Dispose();
             _loadoutWindow = null;
-            _cfgManager.UnsubValueChanged(TTSProviderCVars.Provider, OnTtsProviderChanged); // DS14
         }
 
         protected override void EnteredTree()
@@ -1889,7 +1887,7 @@ namespace Content.Client.Lobby.UI
             if (_readOnly) // DS14
                 return;
 
-            Profile = Profile?.WithTtsVoice(_cfgManager.GetCVar(TTSProviderCVars.Provider), newVoice); // DS14
+            Profile = Profile?.WithVoice(newVoice);
             IsDirty = true;
         }
         // Corvax-TTS-End

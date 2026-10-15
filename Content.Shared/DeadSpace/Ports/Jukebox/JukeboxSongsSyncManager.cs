@@ -2,7 +2,6 @@ using System.Buffers.Binary;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using System.Threading;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Network;
 using Robust.Shared.Network.Transfer;
@@ -16,8 +15,6 @@ public abstract class JukeboxSongsSyncManager : IDisposable
     [Dependency] protected readonly ITransferManager TransferManager = default!;
     protected const string UploadKey = "DS14.Jukebox.Upload";
     protected const string DownloadKey = "DS14.Jukebox.Download";
-    // Array.MaxLength is unavailable in the client sandbox; byte arrays use this CLR limit.
-    private const int MaxByteArrayLength = 0x7FFFFFC7;
     protected bool Disposed;
     [Dependency] protected readonly IResourceManager ResourceManager = default!;
 
@@ -44,24 +41,20 @@ public abstract class JukeboxSongsSyncManager : IDisposable
         await stream.WriteAsync(data);
     }
 
-    protected static async Task<JukeboxSongUploadRequest?> ReadSong(Stream stream, double maxBytes,
-        Func<NetEntity, bool>? authorize = null, CancellationToken cancel = default)
+    protected static async Task<JukeboxSongUploadRequest> ReadSong(Stream stream, double maxBytes)
     {
         var header = new byte[12];
-        await stream.ReadExactlyAsync(header, cancel);
+        await stream.ReadExactlyAsync(header);
         var creator = BinaryPrimitives.ReadInt32LittleEndian(header.AsSpan(0, 4));
         var nameLength = BinaryPrimitives.ReadInt32LittleEndian(header.AsSpan(4, 4));
         var dataLength = BinaryPrimitives.ReadInt32LittleEndian(header.AsSpan(8, 4));
-        if (!double.IsFinite(maxBytes) || maxBytes < 12 || nameLength is <= 0 or > 512 ||
-            dataLength < 12 || dataLength > maxBytes || dataLength > MaxByteArrayLength)
+        if (nameLength is <= 0 or > 512 || dataLength < 12 || dataLength > maxBytes)
             throw new InvalidDataException("Invalid jukebox song size.");
-        if (authorize != null && !authorize(new NetEntity(creator)))
-            return null;
 
         var name = new byte[nameLength];
         var data = new byte[dataLength];
-        await stream.ReadExactlyAsync(name, cancel);
-        await stream.ReadExactlyAsync(data, cancel);
+        await stream.ReadExactlyAsync(name);
+        await stream.ReadExactlyAsync(data);
         if (data[0] != 'O' || data[1] != 'g' || data[2] != 'g' || data[3] != 'S')
             throw new InvalidDataException("Jukebox songs must be Ogg files.");
 
@@ -73,10 +66,8 @@ public abstract class JukeboxSongsSyncManager : IDisposable
         };
     }
 
-    public virtual void Dispose()
+    public void Dispose()
     {
-        if (Disposed)
-            return;
         Disposed = true;
         ContentRoot.Dispose();
     }

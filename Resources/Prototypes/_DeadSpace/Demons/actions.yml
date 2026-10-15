@@ -69,11 +69,11 @@
 - type: entity
   id: ActionDemonShadowGrapple
   name: Притянуть существо
-  description: Оглушает и притягивает выбранное существо, гася свет вокруг.
+  description: Оглушает и притягивает выбранное существо.
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
-    useDelay: 25
+    useDelay: 30
     icon: _DeadSpace/Demons/ability_icons/shadow_grapple.png
   - type: TargetAction
     checkCanAccess: false
@@ -100,13 +100,13 @@
 
 - type: entity
   id: ActionDemonShadowCrawl
-  name: Теневая фаза
-  description: Вы становитесь бесплотным и можете проходить сквозь стены в течение 6 секунд.
+  name: Войти в астрал
+  description: Вы исчезаете из физического мира.
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
     icon: _DeadSpace/Demons/ability_icons/shadow_crawl.png
     itemIconStyle: NoItem
-    useDelay: 120
+    useDelay: 60
   - type: InstantAction
     event: !type:ShadowCrawlActionEvent

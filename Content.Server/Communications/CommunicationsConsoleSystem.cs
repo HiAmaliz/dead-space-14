@@ -1,4 +1,3 @@
-using Content.Shared.DeadSpace.TTS;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.AlertLevel;
@@ -309,7 +308,7 @@ namespace Content.Server.Communications
                 languageId = languageComponent.SelectedLanguage;
 
             if (TryComp<TTSComponent>(message.Actor, out var tts))
-                voice = TTSVoices.GetVoice(tts, _cfg.GetCVar(TTSProviderCVars.Provider)); // DS14
+                voice = tts.VoicePrototypeId;
             // DS14-Languages-end
 
             if (comp.AnnounceSentBy)
@@ -585,12 +584,7 @@ namespace Content.Server.Communications
                 if (message.UseCustomTts)
                 {
                     voice = message.VoiceId?.Trim();
-                    // DS14-start
-                    var invalidVoice = string.IsNullOrEmpty(voice) ||
-                        !_prototypeManager.TryIndex<TTSVoicePrototype>(voice, out var voicePrototype) ||
-                        voicePrototype.Provider != _cfg.GetCVar(TTSProviderCVars.Provider);
-                    // DS14-end
-                    if (invalidVoice) // DS14
+                    if (string.IsNullOrEmpty(voice) || !_prototypeManager.HasIndex<TTSVoicePrototype>(voice))
                     {
                         SendEmagAccessState(uid, component, actor, error: EmagCommunicationsUiError.InvalidVoice);
                         return;

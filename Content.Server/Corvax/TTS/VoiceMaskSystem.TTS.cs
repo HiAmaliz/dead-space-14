@@ -1,4 +1,3 @@
-using Content.Shared.DeadSpace.TTS;
 using Content.Shared.Corvax.TTS;
 using Content.Shared.Implants;
 using Content.Shared.Inventory;
@@ -23,7 +22,7 @@ public partial class VoiceMaskSystem
             return;
         // DS14-end
 
-        args.Args.VoiceId = GetTtsVoice(entity.Comp); // DS14
+        args.Args.VoiceId = entity.Comp.VoiceId;
     }
 
     // DS14-start
@@ -32,7 +31,7 @@ public partial class VoiceMaskSystem
         if (!entity.Comp.Active)
             return;
 
-        args.Event.VoiceId = GetTtsVoice(entity.Comp);
+        args.Event.VoiceId = entity.Comp.VoiceId;
     }
 
     private void OnSpeakerVoiceTransformInnate(Entity<VoiceMaskComponent> entity, ref TransformSpeakerVoiceEvent args)
@@ -40,28 +39,16 @@ public partial class VoiceMaskSystem
         if (!entity.Comp.Active)
             return;
 
-        args.VoiceId = GetTtsVoice(entity.Comp);
-    }
-
-    private string GetTtsVoice(VoiceMaskComponent component)
-    {
-        var provider = _cfgManager.GetCVar(TTSProviderCVars.Provider);
-        var id = component.Voices.GetValueOrDefault(provider) ?? component.VoiceId;
-        return TTSVoices.Resolve(_proto, provider, id)?.ID ?? id;
+        args.VoiceId = entity.Comp.VoiceId;
     }
     // DS14-end
 
     private void OnChangeVoice(Entity<VoiceMaskComponent> entity, ref VoiceMaskChangeVoiceMessage msg)
     {
-        // DS14-start
-        var provider = _cfgManager.GetCVar(TTSProviderCVars.Provider);
-        var invalidVoice = msg.Voice is not { } id || !_proto.TryIndex<TTSVoicePrototype>(id, out var voice) ||
-            voice.Provider != provider || !voice.RoundStart;
-        // DS14-end
-        if (invalidVoice) // DS14
+        if (msg.Voice is { } id && !_proto.HasIndex<TTSVoicePrototype>(id))
             return;
 
-        entity.Comp.Voices[provider] = msg.Voice; // DS14
+        entity.Comp.VoiceId = msg.Voice;
 
         _popupSystem.PopupEntity(Loc.GetString("voice-mask-voice-popup-success"), entity);
 

@@ -430,9 +430,7 @@
   - type: Sprite
     state: kriss
   - type: TTS
-    voices:
-      silero: Kerrigan
-      ntts: NTTSEvilThalya
+    voice: Kerrigan
   - type: SpeakOnTrigger
     pack: PlushieKrissSpeech
 
@@ -445,9 +443,7 @@
   - type: Sprite
     state: ostwind
   - type: TTS
-    voices:
-      silero: Volskaya
-      ntts: NTTSMatildaweasley
+    voice: Volskaya
   - type: SpeakOnTrigger
     pack: PlushieOstwindSpeech
 
@@ -460,9 +456,7 @@
   - type: Sprite
     state: jeleshka
   - type: TTS
-    voices:
-      silero: Nick
-      ntts: NTTSJohnny
+    voice: Nick
   - type: SpeakOnTrigger
     pack: PlushieJeleshkaSpeech
 
@@ -475,9 +469,7 @@
   - type: Sprite
     state: dobryash
   - type: TTS
-    voices:
-      silero: DreadT
-      ntts: NTTSLordHarkon
+    voice: DreadT
   - type: SpeakOnTrigger
     pack: PlushieDobryashSpeech
 
@@ -517,9 +509,7 @@
   - type: Sprite
     state: ainnetel
   - type: TTS
-    voices:
-      silero: Valerian
-      ntts: NTTSHorner
+    voice: Valerian
   - type: SpeakOnTrigger
     pack: PlushieAinnetelSpeech
 
@@ -532,9 +522,7 @@
   - type: Sprite
     state: alex
   - type: TTS
-    voices:
-      silero: P3
-      ntts: NTTSPunisher
+    voice: P3
   - type: SpeakOnTrigger
     pack: PlushieAlexSpeech
 
@@ -547,9 +535,7 @@
   - type: Sprite
     state: elizabeth
   - type: TTS
-    voices:
-      silero: Neeko
-      ntts: NTTSNeco
+    voice: Neeko
   - type: SpeakOnTrigger
     pack: PlushieElizabethSpeech
 
@@ -571,9 +557,7 @@
     sound:
       path: /Audio/_DeadSpace/Items/Toys/ellis_collide.ogg
   - type: TTS
-    voices:
-      silero: Ellis
-      ntts: NTTSEkko
+    voice: Ellis
   - type: SpeakOnTrigger
     pack: PlushieEllisSpeech
 
@@ -586,9 +570,7 @@
   - type: Sprite
     state: kermuth
   - type: TTS
-    voices:
-      silero: Zenyatta
-      ntts: NTTSBrendan
+    voice: Zenyatta
   - type: SpeakOnTrigger
     pack: PlushieKermuthSpeech
 
@@ -614,9 +596,7 @@
   - type: Sprite
     state: evelina
   - type: TTS
-    voices:
-      silero: Mercy
-      ntts: NTTSHanson
+    voice: Mercy
   - type: SpeakOnTrigger
     pack: PlushieEvelinaSpeech
 
@@ -643,9 +623,7 @@
     state: plushie_jonita
     scale: 0.9, 0.9
   - type: TTS
-    voices:
-      silero: Sage
-      ntts: NTTSShani
+    voice: Sage
   - type: SpeakOnTrigger
     pack: PlushieJonitaSpeech
 
@@ -673,9 +651,7 @@
     state: plushie_hermione
     scale: 0.9, 0.9
   - type: TTS
-    voices:
-      silero: Zac
-      ntts: NTTSSlarkDota2
+    voice: Zac
   - type: SpeakOnTrigger
     pack: PlushieHermioneSpeech
 
@@ -689,9 +665,7 @@
     state: plushie_rip
     scale: 0.9, 0.9
   - type: TTS
-    voices:
-      silero: CaveJohnson
-      ntts: NTTSBriman
+    voice: CaveJohnson
   - type: SpeakOnTrigger
     pack: PlushieRIPSpeech
 
@@ -704,9 +678,7 @@
   - type: Sprite
     state: plushie_floria
   - type: TTS
-    voices:
-      silero: Olga
-      ntts: NTTSAlyx
+    voice: Olga
   - type: SpeakOnTrigger
     pack: PlushieFloriaSpeech
 
@@ -719,9 +691,7 @@
   - type: Sprite
     state: plushie_aino
   - type: TTS
-    voices:
-      silero: Anivia
-      ntts: NTTSWinterWyvernDota2
+    voice: Anivia
   - type: SpeakOnTrigger
     pack: PlushieAinoSpeech
 
@@ -734,9 +704,7 @@
   - type: Sprite
     state: plushie_aily
   - type: TTS
-    voices:
-      silero: Karastamper
-      ntts: NTTSLegionCommanderDota2
+    voice: Karastamper
   - type: SpeakOnTrigger
     pack: PlushieAilySpeech
 
@@ -749,9 +717,7 @@
   - type: Sprite
     state: plushie_aizek
   - type: TTS
-    voices:
-      silero: Soldier_Metro
-      ntts: NTTSGuardGuardsmanSergeantDow
+    voice: Soldier_Metro
   - type: SpeakOnTrigger
     pack: PlushieAizekSpeech
 
@@ -764,9 +730,7 @@
   - type: Sprite
     state: plushie_azrail
   - type: TTS
-    voices:
-      silero: Valeera
-      ntts: NTTSEvilThalya
+    voice: Valeera
   - type: SpeakOnTrigger
     pack: PlushieAzrailSpeech
 
@@ -779,9 +743,7 @@
   - type: Sprite
     state: plushie_emilia
   - type: TTS
-    voices:
-      silero: Kerrigan
-      ntts: NTTSEvilThalya
+    voice: Kerrigan
   - type: SpeakOnTrigger
     pack: PlushieEmiliaSpeech
 
@@ -807,9 +769,7 @@
   - type: Sprite
     state: plushie_krivazzora
   - type: TTS
-    voices:
-      silero: FArgo
-      ntts: NTTSFemaleCommander
+    voice: FArgo
   - type: SpeakOnTrigger
     pack: PlushieKrivazoraSpeech
 
@@ -822,9 +782,7 @@
   - type: Sprite
     state: plushie_azrail_hardsuit
   - type: TTS
-    voices:
-      silero: Valeera
-      ntts: NTTSEvilThalya
+    voice: Valeera
   - type: SpeakOnTrigger
     pack: PlushieAzrailHardsuitSpeech
 
@@ -837,9 +795,7 @@
   - type: Sprite
     state: plushie_sharp
   - type: TTS
-    voices:
-      silero: Flark
-      ntts: NTTSZiggs
+    voice: Flark
   - type: SpeakOnTrigger
     pack: PlushieSharpSpeech
 
@@ -866,9 +822,7 @@
   - type: Sprite
     state: plushie_eso
   - type: TTS
-    voices:
-      silero: Ancano
-      ntts: NTTSPhineasblack
+    voice: Ancano
   - type: SpeakOnTrigger
     pack: PlushieEsoSpeech
   - type: RoarAccent
@@ -882,9 +836,7 @@
   - type: Sprite
     state: plushie_kel
   - type: TTS
-    voices:
-      silero: Aragorn
-      ntts: NTTSGeralt
+    voice: Aragorn
   - type: SpeakOnTrigger
     pack: PlushieKelSpeech
 
@@ -897,9 +849,7 @@
   - type: Sprite
     state: plushie_weaver
   - type: TTS
-    voices:
-      silero: Sova
-      ntts: NTTSSniper
+    voice: Sova
   - type: SpeakOnTrigger
     pack: PlushieWeaverSpeech
 
@@ -1014,9 +964,7 @@
   - type: Sprite
     state: plushie_sai
   - type: TTS
-    voices:
-      silero: Sova
-      ntts: NTTSSniper
+    voice: Sova
   - type: SpeakOnTrigger
     pack: PlushieSaiSpeech
 
@@ -1029,9 +977,7 @@
   - type: Sprite
     state: plushie_zhdan
   - type: TTS
-    voices:
-      silero: Garen
-      ntts: NTTSSvenDota2
+    voice: Garen
   - type: SpeakOnTrigger
     pack: PlushieZhdanSpeech
 
@@ -1044,9 +990,7 @@
   - type: Sprite
     state: plushie_elena
   - type: TTS
-    voices:
-      silero: Sage
-      ntts: NTTSShani
+    voice: Sage
   - type: SpeakOnTrigger
     pack: PlushieElenaSpeech
   - type: RoarAccent
@@ -1060,9 +1004,7 @@
   - type: Sprite
     state: plushie_mei
   - type: TTS
-    voices:
-      silero: Magess
-      ntts: NTTSElenwen
+    voice: Magess
   - type: SpeakOnTrigger
     pack: PlushieMeiSpeech
 
@@ -1075,9 +1017,7 @@
   - type: Sprite
     state: plushie_rygoslav
   - type: TTS
-    voices:
-      silero: Guru
-      ntts: NTTSEleazarfig
+    voice: Guru
   - type: SpeakOnTrigger
     pack: PlushieRygoslavSpeech
   - type: ReplacementAccent
@@ -1092,9 +1032,7 @@
   - type: Sprite
     state: plushie_flem
   - type: TTS
-    voices:
-      silero: Samira
-      ntts: NTTSPanam
+    voice: Samira
   - type: SpeakOnTrigger
     pack: PlushieFlemSpeech
   - type: RoarAccent
@@ -1122,9 +1060,7 @@
   - type: Sprite
     state: plushie_aleksey
   - type: TTS
-    voices:
-      silero: TonyStark
-      ntts: NTTSJohnny
+    voice: TonyStark
   - type: SpeakOnTrigger
     pack: PlushieAlekseySpeech
 
@@ -1137,9 +1073,7 @@
   - type: Sprite
     state: plushie_arevin
   - type: TTS
-    voices:
-      silero: Flark
-      ntts: NTTSZiggs
+    voice: Flark
   - type: SpeakOnTrigger
     pack: PlushieArevinSpeech
   - type: RoarAccent
@@ -1153,9 +1087,7 @@
   - type: Sprite
     state: plushie_mila
   - type: TTS
-    voices:
-      silero: Norroa
-      ntts: NTTSElenwen
+    voice: Norroa
   - type: SpeakOnTrigger
     pack: PlushieMilaSpeech
   - type: RoarAccent
@@ -1169,9 +1101,7 @@
   - type: Sprite
     state: plushie_riza
   - type: TTS
-    voices:
-      silero: Yuumi
-      ntts: NTTSNecoArc2
+    voice: Yuumi
   - type: SpeakOnTrigger
     pack: PlushieRizaSpeech
   - type: RoarAccent
@@ -1185,9 +1115,7 @@
   - type: Sprite
     state: plushie_muren
   - type: TTS
-    voices:
-      silero: Kizi
-      ntts: NTTSGenericGoblinB
+    voice: Kizi
   - type: SpeakOnTrigger
     pack: PlushieMurenSpeech
   - type: RoarAccent
@@ -1221,9 +1149,7 @@
   - type: Sprite
     state: plushie_ralseya
   - type: TTS
-    voices:
-      silero: Maiev
-      ntts: NTTSFemaleCommander
+    voice: Maiev
   - type: SpeakOnTrigger
     pack: PlushieRalseyaSpeech
   - type: RoarAccent
@@ -1276,9 +1202,7 @@
   - type: Sprite
     state: plushie_egor
   - type: TTS
-    voices:
-      silero: Vor
-      ntts: NTTSCicero
+    voice: Vor
   - type: SpeakOnTrigger
     pack: PlushieEgorSpeech
 
@@ -1291,9 +1215,7 @@
   - type: Sprite
     state: plushie_kim
   - type: TTS
-    voices:
-      silero: Samira
-      ntts: NTTSPanam
+    voice: Samira
   - type: SpeakOnTrigger
     pack: PlushieKimSpeech
 
@@ -1306,9 +1228,7 @@
   - type: Sprite
     state: plushie_emma
   - type: TTS
-    voices:
-      silero: Mei
-      ntts: NTTSPoppysweeting
+    voice: Mei
   - type: SpeakOnTrigger
     pack: PlushieEmmaSpeech
 
@@ -1514,9 +1434,7 @@
     state: plushie_colonel
     scale: 1.1,1.1
   - type: TTS
-    voices:
-      silero: Barman
-      ntts: NTTSSidorovich
+    voice: Barman
   - type: SpeakOnTrigger
     pack: PlushieColonelSpeech
 
@@ -1543,9 +1461,7 @@
   - type: Sprite
     state: plushie_speisov
   - type: TTS
-    voices:
-      silero: Titus
-      ntts: NTTSSpaceMarinesForceCommanderDow
+    voice: Titus
   - type: SpeakOnTrigger
     pack: PlushieDmitrySpeisovSpeech
 
@@ -1558,9 +1474,7 @@
   - type: Sprite
     state: plushie_ahmet
   - type: TTS
-    voices:
-      silero: Thrud
-      ntts: NTTSGuardOgrynDow
+    voice: Thrud
   - type: SpeakOnTrigger
     pack: PlushieAhmetSpeech
 
@@ -1573,9 +1487,7 @@
   - type: Sprite
     state: plushie_valeniya
   - type: TTS
-    voices:
-      silero: ValeeraHs
-      ntts: NTTSEvilThalya
+    voice: ValeeraHs
   - type: SpeakOnTrigger
     pack: PlushieValeniyaSatoSpeech
 
@@ -1602,9 +1514,7 @@
     state: plushie_riikka
     scale: 1.1,1.1
   - type: TTS
-    voices:
-      silero: Anastasia
-      ntts: NTTSJudy
+    voice: Anastasia
   - type: SpeakOnTrigger
     pack: PlushieRiikkaSpeech
 
@@ -1643,9 +1553,7 @@
   - type: Sprite
     state: plushie_covral
   - type: TTS
-    voices:
-      silero: Vor
-      ntts: NTTSCicero
+    voice: Vor
   - type: SpeakOnTrigger
     pack: PlushieBroneslavSpeech
 
@@ -1673,9 +1581,7 @@
   - type: Sprite
     state: plushie_yukari
   - type: TTS
-    voices:
-      silero: Elisif
-      ntts: NTTSElenwen
+    voice: Elisif
   - type: SpeakOnTrigger
     pack: PlushieYukariSpeech
 
@@ -1688,9 +1594,7 @@
   - type: Sprite
     state: plushie_yosuga
   - type: TTS
-    voices:
-      silero: Mission_control
-      ntts: NTTSGuardCaptainDow
+    voice: Mission_control
   - type: SpeakOnTrigger
     pack: PlushieYosugaSpeech
 
@@ -1703,9 +1607,7 @@
   - type: Sprite
     state: plushie_gora
   - type: TTS
-    voices:
-      silero: Livsy
-      ntts: NTTSAbrahamRonen
+    voice: Livsy
   - type: SpeakOnTrigger
     pack: PlushieGoraSpeech
 
@@ -1718,9 +1620,7 @@
   - type: Sprite
     state: plushie_naomi
   - type: TTS
-    voices:
-      silero: Diana
-      ntts: NTTSPhilippaEilhart
+    voice: Diana
   - type: SpeakOnTrigger
     pack: PlushieNaomiSpeech
 
@@ -1734,9 +1634,7 @@
     state: plushie_john
     scale: 1.1,1.1
   - type: TTS
-    voices:
-      silero: CaveJohnson
-      ntts: NTTSBriman
+    voice: CaveJohnson
   - type: SpeakOnTrigger
     pack: PlushieJohnSpeech
 
@@ -1777,9 +1675,7 @@
   - type: Sprite
     state: plushie_nikita
   - type: TTS
-    voices:
-      silero: Stories
-      ntts: NTTSForester
+    voice: Stories
   - type: SpeakOnTrigger
     pack: PlushieNikitaSpeech
 
@@ -1792,9 +1688,7 @@
   - type: Sprite
     state: guitarwhispers
   - type: TTS
-    voices:
-      silero: LeeSin
-      ntts: NTTSOmniknightDota2
+    voice: LeeSin
   - type: SpeakOnTrigger
     pack: PlushieGuitarwhispersSpeech
 
@@ -1807,9 +1701,7 @@
   - type: Sprite
     state: muenrai
   - type: TTS
-    voices:
-      silero: Lanathel
-      ntts: NTTSPhilippaEilhart
+    voice: Lanathel
   - type: SpeakOnTrigger
     pack: PlushieMuenraiSpeech
 
@@ -1822,9 +1714,7 @@
   - type: Sprite
     state: kieru
   - type: TTS
-    voices:
-      silero: MalygosWOTLK
-      ntts: NTTSDragonKnightDragonDota2
+    voice: MalygosWOTLK
   - type: SpeakOnTrigger
     pack: PlushieKieruSpeech
 
@@ -1837,9 +1727,7 @@
   - type: Sprite
     state: imarab
   - type: TTS
-    voices:
-      silero: Cop
-      ntts: NTTSNancyHartley
+    voice: Cop
   - type: SpeakOnTrigger
     pack: PlushieImarabSpeech
 
@@ -1853,9 +1741,7 @@
     state: plushie_zuti_kuz
     scale: 0.92,0.92
   - type: TTS
-    voices:
-      silero: GingerbreadMan
-      ntts: NTTSZiggs
+    voice: GingerbreadMan
   - type: SpeakOnTrigger
     pack: PlushieZutiKuzSpeech
 
@@ -1881,9 +1767,7 @@
   - type: Sprite
     state: plushie_sastr_bon
   - type: TTS
-    voices:
-      silero: Torbjorn
-      ntts: NTTSBralik
+    voice: Torbjorn
   - type: SpeakOnTrigger
     pack: PlushieSastrBonSpeech
   - type: UseDelay
@@ -1898,9 +1782,7 @@
   - type: Sprite
     state: plushie_ivan_kuvalda
   - type: TTS
-    voices:
-      silero: Torbjorn
-      ntts: NTTSBralik
+    voice: Torbjorn
   - type: SpeakOnTrigger
     pack: PlushieIvanKuvaldaSpeech
   - type: UseDelay
@@ -1928,9 +1810,7 @@
   - type: Sprite
     state: plushie_margo
   - type: TTS
-    voices:
-      silero: Anivia
-      ntts: NTTSWinterWyvernDota2
+    voice: Anivia
   - type: SpeakOnTrigger
     pack: PlushieMargoSpeech
 
@@ -1943,9 +1823,7 @@
   - type: Sprite
     state: plushie_genesis
   - type: TTS
-    voices:
-      silero: Qiyana
-      ntts: NTTSCaitlyn
+    voice: Qiyana
   - type: SpeakOnTrigger
     pack: PlushieGenesisSpeech
 
@@ -1958,9 +1836,7 @@
   - type: Sprite
     state: scarlett
   - type: TTS
-    voices:
-      silero: Pharah
-      ntts: NTTSSarahLyonsFl3
+    voice: Pharah
   - type: SpeakOnTrigger
     pack: PlushieScarlettSpeech
   - type: EmitSoundOnTrigger

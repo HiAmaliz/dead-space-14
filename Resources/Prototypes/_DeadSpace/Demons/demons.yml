@@ -110,9 +110,7 @@
         Brute: -2
         Burn: -2
   - type: TTS
-    voices:
-      silero: Avozu
-      ntts: NTTSDoomDota2
+    voice: Avozu
   - type: NoSlip
   - type: Reactive
     reactions:

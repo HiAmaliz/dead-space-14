@@ -1,7 +1,5 @@
 using Content.Server.Administration.Logs;
-using Content.Server.DeadSpace.CentComm; //DS-14
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.Station.Systems; //DS-14
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
@@ -24,7 +22,6 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SurveillanceCameraMapSystem _cameraMapSystem = default!;
-    [Dependency] private readonly StationSystem _station = default!; //DS-14
 
     // Pings a surveillance camera subnet. All cameras will always respond
     // with a data message if they are on the same subnet.
@@ -115,11 +112,6 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
                     {
                         return;
                     }
-
-                    //DS-14 start
-                    if (OnCentComm(uid) != OnCentComm(args.Sender))
-                        return;
-                    //DS-14 end
 
                     dest = args.SenderAddress;
                     payload[CameraSubnetData] = subnet;
@@ -416,13 +408,6 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
 
         _appearance.SetData(uid, SurveillanceCameraVisualsKey.Key, key, appearance);
     }
-
-    //DS-14 start
-    private bool OnCentComm(EntityUid uid)
-    {
-        return _station.GetOwningStation(uid) is { } station && HasComp<CentCommStationComponent>(station);
-    }
-    //DS-14 end
 }
 
 public sealed class OnSurveillanceCameraViewerAddEvent : EntityEventArgs

@@ -30,7 +30,6 @@
     - TaipanCanisters
     - TaipanCrates
     - TaipanLockers
-    - Gloves
 
 - type: entity
   parent: SprayPainterTaipan

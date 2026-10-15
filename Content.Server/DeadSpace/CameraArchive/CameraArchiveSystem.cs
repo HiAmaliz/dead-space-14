@@ -7,11 +7,8 @@ using Content.Server.Power.Components;
 using Content.Server.SurveillanceCamera;
 using Content.Server.NPC.HTN;
 using Content.Shared.CCVar;
-using Content.Server.DeadSpace.CentComm;
-using Content.Server.Station.Systems;
 using Content.Shared.DeadSpace.CameraArchives;
 using Content.Shared.DeadSpace.SignBoard;
-using Content.Shared.DeadSpace.UniformAccessories.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Clothing;
 using Content.Shared.Chat;
@@ -72,7 +69,6 @@ public sealed class CameraArchiveSystem : EntitySystem
     [Dependency] private readonly SharedToolSystem _tools = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
-    [Dependency] private readonly StationSystem _station = default!;
 
     private static readonly string Welding = "Welding";
     private const string AudioEntity = "Audio";
@@ -198,9 +194,6 @@ public sealed class CameraArchiveSystem : EntitySystem
 
     public bool ShouldRecord(EntityUid camera)
     {
-        if (OnCentComm(camera))
-            return false;
-
         if (!_cfg.GetCVar(CCVars.CameraArchiveActive))
             return false;
 
@@ -223,7 +216,7 @@ public sealed class CameraArchiveSystem : EntitySystem
 
     public bool Listed(EntityUid camera)
     {
-        if (!HasComp<SurveillanceCameraComponent>(camera) || OnCentComm(camera))
+        if (!HasComp<SurveillanceCameraComponent>(camera))
             return false;
 
         if (!_tag.HasTag(camera, BodyCameraTag))
@@ -242,38 +235,11 @@ public sealed class CameraArchiveSystem : EntitySystem
         if (_cameras.GetConfiguredName(camera) == null)
             return false;
 
-        return TryGetBodyCameraCarrier(camera, out _);
-    }
-
-    private bool OnCentComm(EntityUid uid)
-    {
-        return _station.GetOwningStation(uid) is { } station && HasComp<CentCommStationComponent>(station);
-    }
-
-    private bool TryGetBodyCameraCarrier(EntityUid camera, out EntityUid carrier)
-    {
-        carrier = default;
         var parent = Transform(camera).ParentUid;
         if (parent.IsValid() && _hands.IsHolding(parent, camera))
-        {
-            carrier = parent;
             return true;
-        }
 
-        if (_inventory.TryGetContainingSlot(camera, out _) && parent.IsValid())
-        {
-            carrier = parent;
-            return true;
-        }
-
-        if (!_containers.TryGetContainingContainer(camera, out var container)
-            || container.ID != UniformAccessoryHolderComponent.ContainerId
-            || !HasComp<UniformAccessoryHolderComponent>(container.Owner)
-            || !_inventory.TryGetContainingSlot(container.Owner, out _))
-            return false;
-
-        carrier = Transform(container.Owner).ParentUid;
-        return carrier.IsValid();
+        return _inventory.TryGetContainingSlot(camera, out _);
     }
 
     public void Forget(EntityUid camera)
@@ -492,20 +458,8 @@ public sealed class CameraArchiveSystem : EntitySystem
         var slots = _inventory.GetSlotEnumerator(person, SlotFlags.All);
         while (slots.MoveNext(out var container))
         {
-            if (container.ContainedEntity is not { } worn)
-                continue;
-
-            if (_tag.HasTag(worn, BodyCameraTag))
+            if (container.ContainedEntity is { } worn && _tag.HasTag(worn, BodyCameraTag))
                 Enqueue(worn, place);
-
-            if (!TryComp<UniformAccessoryHolderComponent>(worn, out var holder) || holder.AccessoryContainer == null)
-                continue;
-
-            foreach (var accessory in holder.AccessoryContainer.ContainedEntities)
-            {
-                if (_tag.HasTag(accessory, BodyCameraTag))
-                    Enqueue(accessory, place);
-            }
         }
 
         foreach (var held in _hands.EnumerateHeld(person))
@@ -865,13 +819,13 @@ public sealed class CameraArchiveSystem : EntitySystem
             return;
 
         var origin = _xform.GetWorldPosition(args.Source);
-        var query = EntityQueryEnumerator<SurveillanceCameraComponent>();
-        while (query.MoveNext(out var uid, out _))
+        var query = EntityQueryEnumerator<SurveillanceCameraComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out _, out var xform))
         {
             if (!_tag.HasTag(uid, BodyCameraTag) || !BodyCameraLive(uid))
                 continue;
 
-            var wornBySpeaker = TryGetBodyCameraCarrier(uid, out var carrier) && carrier == args.Source;
+            var wornBySpeaker = xform.ParentUid == args.Source;
             var near = (_xform.GetWorldPosition(uid) - origin).LengthSquared() <= CameraArchive.ViewRadius * CameraArchive.ViewRadius;
             if (!wornBySpeaker && !near)
                 continue;

@@ -76,12 +76,6 @@ public abstract class SharedUniformAccessorySystem : EntitySystem
             return;
         }
 
-        if (TerminatingOrDeleted(args.Used) || TerminatingOrDeleted(holder))
-            return;
-
-        if (Transform(holder).GridUid is { } grid && TerminatingOrDeleted(grid))
-            return;
-
         _container.Insert(args.Used, container);
         UpdateExamineData(holder);
         _item.VisualsChanged(holder);
